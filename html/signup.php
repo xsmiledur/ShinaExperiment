@@ -49,7 +49,7 @@
     </tr>
     <tr>
         <th>出身大学</th>
-        <td><input type="text" name="collage"></td>
+        <td><input type="text" name="univ"></td>
     </tr>
     </tbody>
 </table>

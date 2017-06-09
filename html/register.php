@@ -6,29 +6,21 @@
  * Time: 14:55
  */
 
-$name  = @$_POST['name'];
-$email = @$_POST['email'];
-$pass  = @$_POST['pass'];
-$age   = @$_POST['age'];
-$sex   = @$_POST['sex'];
-$birth = @$_POST['birth'];
-$univ  = @$_POST['univ'];
+$clm = array('name', 'email', 'pass', 'age', 'sex', 'birth', 'univ');
+
+$data = array();
+foreach ($clm as $name) {
+    $data[":".$name] = @$_POST[$name];
+}
 
 try {
 
     // データベースに接続
-    $pdo = new PDO(
-        'mysql:host=mydb;port=3306;charset=utf8;unix_socket=/var/run/mysqld/mysqld.sock;', 'root', 'password'
-/*        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        ]
-*/
-    );
+    $pdo = new PDO('mysql:host=mydb;charset=utf8;dbname=shina_exp', 'root', 'password');
 
-    $stmt = $pdo->prepare('SELECT * FROM tbl WHERE id = :id');
-    $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
-    $result = $stmt->execute();
+    $sql = "INSERT INTO user_data (name, email, pass, age, sex, birth, univ) VALUES (:name, :email, :pass, :age, :sex, :birth, :univ)";
+    $stmt = $pdo -> prepare($sql);
+    $res = $stmt->execute($data);
 
 
 } catch (PDOException $e) {
@@ -36,3 +28,19 @@ try {
     die($e->getMessage());
 
 }
+?>
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ホームページ</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>登録が完了しました</h1>
+
+<a href="login.php">こちら</a>からログインできます

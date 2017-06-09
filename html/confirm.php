@@ -5,14 +5,13 @@
  * Date: 2017/06/09
  * Time: 14:49
  */
-$name  = @$_POST['name'];
-$email = @$_POST['email'];
-$pass  = @$_POST['pass'];
-$age   = @$_POST['age'];
-$sex   = @$_POST['sex'];
-$birth = @$_POST['birth'];
-$univ  = @$_POST['univ'];
 
+$clm = array('name', 'email', 'pass', 'age', 'sex', 'birth', 'univ');
+
+$data = array();
+foreach ($clm as $name) {
+    $data[$name] = @$_POST[$name];
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,38 +38,38 @@ $univ  = @$_POST['univ'];
         <tbody>
         <tr>
             <th>名前</th>
-            <td><?php echo $name; ?></td>
-            <input type="hidden" name="name" value="<?php echo $name; ?>">
+            <td><?php echo $data['name']; ?></td>
+            <input type="hidden" name="name" value="<?php echo $data['name']; ?>">
         </tr>
         <tr>
             <th>Emailアドレス</th>
-            <td><?php echo $email; ?></td>
-            <input type="hidden" name="email" value="<?php echo $email; ?>">
+            <td><?php echo $data['email']; ?></td>
+            <input type="hidden" name="email" value="<?php echo $data['email']; ?>">
         </tr>
         <tr>
             <th>パスワード</th>
-            <td><?php echo $pass; ?></td>
-            <input type="hidden" name="pass" value="<?php echo $pass; ?>">
+            <td><?php echo $data['pass']; ?></td>
+            <input type="hidden" name="pass" value="<?php echo $data['pass']; ?>">
         </tr>
         <tr>
             <th>年齢</th>
-            <td><?php echo $age; ?></td>
-            <input type="hidden" name="age" value="<?php echo $age; ?>">
+            <td><?php echo $data['age']; ?></td>
+            <input type="hidden" name="age" value="<?php echo $data['age']; ?>">
         </tr>
         <tr>
             <th>性別</th>
-            <input type="hidden" name="sex" value="<?php echo $sex; ?>">
-            <td><?php echo $sex; ?></td>
+            <input type="hidden" name="sex" value="<?php echo $data['sex']; ?>">
+            <td><?php echo $data['sex']; ?></td>
         </tr>
         <tr>
             <th>誕生日</th>
-            <td><?php echo $birth; ?></td>
-            <input type="hidden" name="birth" value="<?php echo $birth; ?>">
+            <td><?php echo $data['birth']; ?></td>
+            <input type="hidden" name="birth" value="<?php echo $data['birth']; ?>">
         </tr>
         <tr>
             <th>出身大学</th>
-            <td><?php echo $univ; ?></td>
-            <input type="hidden" name="univ" value="<?php echo $univ; ?>">
+            <td><?php echo $data['univ']; ?></td>
+            <input type="hidden" name="univ" value="<?php echo $data['univ']; ?>">
         </tr>
         </tbody>
     </table>
