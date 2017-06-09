@@ -1,8 +1,6 @@
-FROM php:apache
-COPY ./public/index.php /var/www/html/
-
 FROM centos
-MAINTAINER Yuri Mikawa
+
+MAINTAINER Yusuke Tsujisawa <yusuke@tsujisawa.com>
 
 RUN echo "now building..."
 
@@ -24,15 +22,7 @@ RUN yum -y install --enablerepo=epel,remi-php70,remi php php-cli php-gd php-mbst
 COPY build/httpd.conf /etc/httpd/conf
 COPY build/php.ini /etc
 
-RUN mkdir -p /var/www
-RUN mkdir -p /var/public
-RUN mkdir -p /var/application
-RUN mkdir -p /var/public/uploads
-
-# Add files from WWW folder
-COPY public /var/www/public
-
-RUN chmod 775 /var/www/public/uploads
+COPY ./html/ /var/www/html/
 
 # Do some web maping
 VOLUME ["/var/www"]
