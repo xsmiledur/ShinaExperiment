@@ -8,12 +8,12 @@
 
 session_start();
 
-$email = @$_POST['email'];
-$pass  = @$_POST['pass'];
+$email = (@$_POST['email']) ? @$_POST['email'] : $_SESSION['email'];
+$pass  = (@$_POST['pass']) ? @$_POST['pass'] : $_SESSION['pass'];
 
 
 if (!$email || !$pass) {
-    die('ログイン失敗');
+    die('ログイン失敗 ERROR1');
 }
 
 
@@ -24,8 +24,8 @@ try {
         'root',
         'password',
         [
-            PDO::MYSQL_ATTR_READ_DEFAULT_FILE => '/etc/mysql/my.cnf',
-            PDO::MYSQL_ATTR_READ_DEFAULT_GROUP => 'client',
+            //PDO::MYSQL_ATTR_READ_DEFAULT_FILE => '/etc/mysql/my.cnf',
+            //PDO::MYSQL_ATTR_READ_DEFAULT_GROUP => 'client',
             PDO::ATTR_EMULATE_PREPARES => false
         ]
     );
@@ -52,10 +52,11 @@ try {
 }
 
 if (!$data) {
-    die('ログイン失敗');
+    die('ログイン失敗 ERROR2');
 }
 
 $_SESSION['email'] = $email;
+$_SESSION['name'] = $data['name'];
 $_SESSION['pass'] = $pass;
 
 $msg = "ログイン完了しました。<br>";

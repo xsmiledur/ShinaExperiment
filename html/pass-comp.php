@@ -18,8 +18,52 @@ function ex($s) { //XSS対策用のHTMLエスケープと表示関数
 
 session_start();
 $email = $_SESSION['email'];
+$name = $_SESSION['name'];
 $pass  = @$_POST['pass'];
-var_dump($email);var_dump($pass);
+
+if (!$email) {
+    die('ログインしてください');
+}
+
+/**
+ * 新パスワード登録
+ */
+
+if (!$pass) {
+    die('パスワードを4字以上で入力してください');
+}
+
+/* トランザクション開始 */
+try {
+    /* データベースに接続 */
+    $pdo = new PDO(
+        'mysql:host=mydb;port=3306;charset=utf8;dbname=shina_exp;',
+        'root',
+        'password',
+        [
+            //PDO::MYSQL_ATTR_READ_DEFAULT_FILE => '/etc/mysql/my.cnf',
+            //PDO::MYSQL_ATTR_READ_DEFAULT_GROUP => 'client',
+            PDO::ATTR_EMULATE_PREPARES => false
+        ]
+    );
+
+    $pdo->beginTransaction();
+
+    $sql = "UPDATE user_data SET pass = :pass WHERE email = :email";
+    $stmt = $pdo->prepare($sql);
+    $params = array(':pass' => $pass, ':email' => $email);
+    $stmt->execute($params);
+
+    /* 変更をコミットする */
+    $pdo->commit();
+
+} catch (PDOException $e) {
+
+    die($e->getMessage());
+
+}
+
+$_SESSION['pass'] = $pass;
 
 ?>
 
