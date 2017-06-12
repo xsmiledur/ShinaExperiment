@@ -1,8 +1,26 @@
+<?php
+/**
+ *
+ * 『4.7 リダイレクト処理にまつわる脆弱性』（安全なWebアプリケーションの作り方 p187~）
+ * リダイレクト処理
+ *
+ * *** 罠ページ ***
+ * ログインが間違っているとして再度ログイン情報を入力させる
+ *
+ *
+ * Created by IntelliJ IDEA.
+ * User: xsmiledur
+ * Date: 2017/06/12
+ * Time: 16:56
+ */
+
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ログイン</title>
+    <title>ログインエラー</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="style.css">
 </head>
@@ -10,8 +28,8 @@
 
 <h1>ログインページ</h1>
 
-
-<form action="home.php?url=<?php echo @$_GET['url']; ?>" method="POST">
+Emailまたはパスワードが違います。再度認証してください。
+<form action="auth.php?url=<?php echo @$_GET['url']; ?>" method="POST">
     <table>
         <tbody>
         <tr>

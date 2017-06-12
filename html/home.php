@@ -59,7 +59,14 @@ $_SESSION['email'] = $email;
 $_SESSION['name'] = $data['name'];
 $_SESSION['pass'] = $pass;
 
-$msg = "ログイン完了しました。<br>";
+/* もし遷移先があればリダイレクト */
+$url = @$_GET['url'];
+if ($url) {
+    header('Location: '. $url);
+    exit();
+}
+
+$msg = "ログインしました。<br>";
 
 
 ?>

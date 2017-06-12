@@ -116,4 +116,5 @@ try {
     お探しの条件では結果はありません。
 <?php endif; ?>
 
+<a href="home.php">トップページに戻る</a>
 </body>
