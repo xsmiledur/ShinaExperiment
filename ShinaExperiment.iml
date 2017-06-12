@@ -15,16 +15,5 @@
         </SOURCES>
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library name="PHARS">
-        <CLASSES>
-          <root url="phar://$MODULE_DIR$/build/Zend/Service/WindowsAzure/CommandLine/Scaffolders/DefaultScaffolder.phar/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="phar://$MODULE_DIR$/build/Zend/Service/WindowsAzure/CommandLine/Scaffolders/DefaultScaffolder.phar/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
   </component>
 </module>

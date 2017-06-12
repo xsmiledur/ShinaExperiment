@@ -6,30 +6,43 @@
  * Time: 15:03
  */
 
+session_start();
 
 $email = @$_POST['email'];
 $pass  = @$_POST['pass'];
 
-$msg = "ログイン完了しました。<br>";
+
+if (!$email || !$pass) {
+    die('ログイン失敗');
+}
+
 
 try {
-
     // データベースに接続
     $pdo = new PDO(
-        'mysql:host=mydb;port=3306;charset=utf8;unix_socket=/var/run/mysqld/mysqld.sock;',
+        'mysql:host=mydb;port=3306;charset=utf8;dbname=shina_exp;',
         'root',
         'password',
         [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::MYSQL_ATTR_READ_DEFAULT_FILE => '/etc/mysql/my.cnf',
+            PDO::MYSQL_ATTR_READ_DEFAULT_GROUP => 'client',
+            PDO::ATTR_EMULATE_PREPARES => false
         ]
     );
-
     /*
-    $stmt = $pdo->prepare('SELECT * FROM tbl WHERE id = :id');
-    $stmt->bindParam(':id', $user_id, PDO::PARAM_INT);
-    $result = $stmt->execute();
+    $sql = "SELECT * FROM user_data WHERE (email = '" . $email . "' AND pass = '".$pass."');";
+
+    $data = $pdo->query($sql);
+    var_dump($data);
+    echo "<br><br>";
     */
+
+    $sql = "SELECT * FROM user_data WHERE (email = :email AND pass = :pass);";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+    $stmt->bindParam(':pass', $pass, PDO::PARAM_STR);
+    $result = $stmt->execute();
+    $data = $stmt->fetch();
 
 
 } catch (PDOException $e) {
@@ -38,6 +51,14 @@ try {
 
 }
 
+if (!$data) {
+    die('ログイン失敗');
+}
+
+$_SESSION['email'] = $email;
+$_SESSION['pass'] = $pass;
+
+$msg = "ログイン完了しました。<br>";
 
 
 ?>
@@ -56,6 +77,7 @@ try {
 
 <?php echo $msg; ?>
 
+<br>
 あなたの情報
 <table>
     <thead>
@@ -67,32 +89,34 @@ try {
     <tbody>
     <tr>
         <th>名前</th>
-        <td><?php echo $name; ?></td>
+        <td><?php echo $data['name']; ?></td>
     </tr>
     <tr>
         <th>Emailアドレス</th>
         <td><?php echo $email; ?></td>
     </tr>
-    <tr>
+    <!--<tr>
         <th>パスワード</th>
         <td><?php echo $pass; ?></td>
-    </tr>
+    </tr>-->
     <tr>
         <th>年齢</th>
-        <td><?php echo $age; ?></td>
+        <td><?php echo $data['age']; ?></td>
     </tr>
     <tr>
         <th>性別</th>
-        <td><?php echo $sex; ?></td>
+        <td><?php echo $data['sex']; ?></td>
     </tr>
     <tr>
         <th>誕生日</th>
-        <td><?php echo $birth; ?></td>
+        <td><?php echo $data['birth']; ?></td>
     </tr>
     <tr>
         <th>出身大学</th>
-        <td><?php echo $univ; ?></td>
+        <td><?php echo $data['univ']; ?></td>
     </tr>
     </tbody>
 </table>
+
+<a href="pass-change.php">パスワード変更</a>
 
