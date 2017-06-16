@@ -12,7 +12,8 @@
 
 session_start();
 $email = $_SESSION['email'];
-if ($email = '') die('ログインしてください');
+$pass = $_SESSION['pass'];
+if (!$email || !$pass) die('ログインしてください');
 
 
 ?>
@@ -32,5 +33,5 @@ if ($email = '') die('ログインしてください');
     新パスワード<input name="pass" type="password">
     <button type="submit">パスワード変更</button>
 </form>
-<a href="home.php">ホームページに戻る</a>
+<a href="top-page.php">ホームページに戻る</a>
 

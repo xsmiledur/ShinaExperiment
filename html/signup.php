@@ -63,6 +63,10 @@
 </html>
 
 
+<a href="/">トップページへ戻る</a><br>
+<a href="login.php">ログイン</a>
+
+
 <?php
 /**
  * Created by IntelliJ IDEA.

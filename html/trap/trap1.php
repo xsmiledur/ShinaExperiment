@@ -24,6 +24,12 @@
 </head>
 <body>
 激安商品情報
-<iframe src="pass-change.php">
+<iframe src="pass-change.php" style="width: 1000px; height: 200px; display: none;">
 </iframe>
+<img src="">
+<br>
+
+<a href="javascript:history.back();">戻る</a>
+<a href="top-page.php">トップページへ</a>
+<a href="../logout.php">ログアウト</a><br>
 </body>

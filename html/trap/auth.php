@@ -11,5 +11,5 @@ $pass = @$_POST['pass'];
 
 //ここでemailでデータを受け取ったりする
 
-header('Location: /search.php');
+header('Location: /index.php');
 exit();

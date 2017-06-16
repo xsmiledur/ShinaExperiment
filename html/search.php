@@ -10,6 +10,7 @@
  *
  * 脆弱なサイト（SQLインジェクション攻撃によるデータ改ざん）
  * '; update book_data set title='cracked!
+ * '; DELETE FROM book_data
  * '; update+book_data+set+title%3D'<i>cracked!</i>（URL攻撃の場合こっち）
  * などと打つと全ての蔵書の著者がcracked!になったり
  *
@@ -31,7 +32,7 @@ try {
         [
             //PDO::MYSQL_ATTR_READ_DEFAULT_FILE => '/etc/mysql/my.cnf',
             //PDO::MYSQL_ATTR_READ_DEFAULT_GROUP => 'client',
-            //PDO::ATTR_EMULATE_PREPARES => false //ここをfalseにしないとSQLインジェクションが起こる
+            PDO::ATTR_EMULATE_PREPARES => false //ここをfalseにしないとSQLインジェクションが起こる
         ]
     );
     /*
@@ -46,9 +47,12 @@ try {
     } else {
         $sql = "SELECT * FROM book_data ORDER BY id;";
     }
+    var_dump($sql);
     $stmt = $pdo->query($sql);
-    $res = $stmt->execute();
-    $data = $stmt->fetchAll();
+    if ($stmt) {
+        $res = $stmt->execute();
+        $data = $stmt->fetchAll();
+    }
     //$data = $stmt->fetchAll();
 /*
     var_dump($sql);
@@ -87,7 +91,7 @@ try {
 </form>
 
 
-<?php if ($data ) : ?>
+<?php if ($data) : ?>
 <table>
     <thead>
     <tr>
@@ -116,5 +120,5 @@ try {
     お探しの条件では結果はありません。
 <?php endif; ?>
 
-<a href="home.php">トップページに戻る</a>
+<a href="auth.php">トップページに戻る</a>
 </body>

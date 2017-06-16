@@ -79,5 +79,5 @@ $_SESSION['pass'] = $pass;
 
 <h1>パスワード変更完了</h1>
 <?php echo $name; ?>さんのパスワードを<?php echo ex($pass); ?>に変更しました。
-<a href="home.php">ホームページに戻る</a>
+<a href="auth.php">ホームページに戻る</a>
 
