@@ -28,7 +28,7 @@ session_start();
 $data = $_SESSION['data'];
 
 if (!$data || !$data['email'] || !$data['pass']) {
-    header('Location: index.php');
+    header(('Location: index.php'));
 }
 
 $keyword = $_GET['keyword'];
@@ -38,38 +38,28 @@ try {
     $pdo = new PDO(
         'mysql:host=mydb;port=3306;charset=utf8;dbname=shina_exp;',
         'root',
-        'password'
+        'password',
+        [
+            //PDO::MYSQL_ATTR_READ_DEFAULT_FILE => '/etc/mysql/my.cnf',
+            //PDO::MYSQL_ATTR_READ_DEFAULT_GROUP => 'client',
+            //PDO::ATTR_EMULATE_PREPARES => false //ここをfalseにしないとSQLインジェクションが起こる
+        ]
     );
-    //$sql = "SELECT * FROM user_data WHERE author = :author;";
-    /*
-    $data = $pdo->query($sql);
-    var_dump($data);
-    echo "<br><br>";
-    */
-
     if ($keyword) {
-        $sql = "SELECT * FROM book_data WHERE author = '" . $keyword . "' ORDER BY id;";
-        $sql = "SELECT * FROM book_data WHERE author = '" . $keyword . "';";
+        $sql = "SELECT * FROM book_data WHERE author = :author;";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(':author', $keyword, PDO::PARAM_STR);
+        $stmt->execute();
     } else {
         $sql = "SELECT * FROM book_data ORDER BY id;";
+        $stmt = $pdo->query($sql);
     }
 
-    $stmt = $pdo->query($sql, PDO::FETCH_ASSOC);
     if ($stmt) {
-        $data = $stmt->fetchAll();
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } else {
         var_dump($pdo->errorInfo()[2]);
     }
-    //var_dump($stmt);
-    //var_dump($data);
-    //$data = $stmt->fetchAll();
-    /*
-        var_dump($sql);
-        $stmt = $pdo->prepare($sql);
-        $result = $stmt->execute();
-        $data = $stmt->fetchAll();
-    */
-
 
 } catch (PDOException $e) {
     die($e->getMessage());
@@ -126,9 +116,4 @@ try {
 <?php endif; ?>
 
 <a href="top-page.php">トップページに戻る</a>
-
-<!--<script type="text/javascript">alert(navigator.cookieEnabled);</script>-->
-<!--<script type="text/javascript"> alert(document.cookie);</script>-->
-<!--<script type="text/javascript">alert("aaa");</script>-->
-
 </body>

@@ -4,6 +4,15 @@
  * 『「重要な処理」の際に混入する脆弱性』（安全なWebアプリケーションの作り方 p141~）
  * パスワード変更処理を題材にして
  *
+ * *** 脆弱性をカバーしたページ ***
+ *
+ * ①秘密情報(Token)の埋め込み
+ * // 第三者に予測不可能なトークンを要求することにより、CSRF攻撃を防ぐことができる
+ * ②パスワード再入力
+ * // 物品の購入において利用者の意思の念押し等に用いるので、今回は省く
+ * ③Refererのチェック
+ * // 前のページのチェック
+ *
  * Created by IntelliJ IDEA.
  * User: xsmiledur
  * Date: 2017/06/09
@@ -11,20 +20,27 @@
  */
 
 session_start();
-
-function ex($s) { //XSS対策用のHTMLエスケープと表示関数
-    echo htmlspecialchars($s, ENT_COMPAT, 'UTF-8');
-}
-
-session_start();
 $data = $_SESSION['data'];
 $pass  = @$_POST['pass'];
 $passNum = strlen($pass);
 $pass = md5($pass);
 
+// ログイン必須
 if (!$data || !$data['email'] || !$data['pass']) {
     die('ログインしてください');
 }
+
+// ①秘密情報Token 確認
+// 第三者に予測不可能なトークンを要求することにより、CSRF攻撃を防ぐことができる
+if (session_id() != @$_POST['token']) {
+    die('正規の画面からご使用ください[TOKEN]');
+}
+
+// ③Refererのチェック
+if (preg_match('#\Ahttp://localhost/correct/pass-change.php#', @$_SERVER['HTTP_REFERER']) !== 1) {
+    die('正規の画面からご使用ください[REFERER]');
+}
+
 
 /**
  * 新パスワード登録

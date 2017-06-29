@@ -33,7 +33,8 @@ if ($data && $data['email'] && $data['pass']) {
 
 <br><br>
 以下 外部ページと仮定<br>
-<a href="login.php?url=http://localhost/trap/trap3.php">！罠その３（ログイン処理が必要な用に見せかける）</a>
+<a href="login.php?url=http://localhost/trap/trap3.php">！罠その３（ログイン処理が必要な用に見せかける）</a><br>
+<a href="login.php?url=12">検索用ページ（罠その３と比較用 urlが番号指定）</a>
 
 
 </body>

@@ -11,9 +11,8 @@
  */
 
 session_start();
-$email = $_SESSION['email'];
-$pass = $_SESSION['pass'];
-if (!$email || !$pass) die('ログインしてください');
+$data = $_SESSION['data'];
+if (!$data || !$data['email'] || !$data['pass']) die('ログインしてください');
 
 
 ?>

